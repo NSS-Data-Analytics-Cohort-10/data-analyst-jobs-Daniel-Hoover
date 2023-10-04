@@ -77,30 +77,45 @@ GROUP BY company;
 SELECT company, ROUND(AVG(review_count),2) AS review, AVG(star_rating) AS stars
 FROM data_analyst_jobs
 WHERE review_count > 5000 AND company IS NOT NULL
-GROUP BY company
+GROUP BY company, location
 ORDER BY stars DESC;
 
 --Unilever, General Motors, Nike, American Express, Microsoft, and Kaiser Permanente have the highest star rating with a 4.19 (rounded).
 
 -- 11.	Find all the job titles that contain the word ‘Analyst’. How many different job titles are there? 
 
+SELECT COUNT(title)
+FROM data_analyst_jobs
+WHERE LOWER(title) LIKE LOWER('%Analyst%');
+
+--1669 total jobs
+
 SELECT COUNT(DISTINCT title)
 FROM data_analyst_jobs
-WHERE title LIKE '%Analyst%';
+WHERE LOWER(title) LIKE LOWER('%Analyst%');
 
---There are 754 different job titles that contain "Analyst".
+--There are 774 different job titles that contain "Analyst".
 
 -- 12.	How many different job titles do not contain either the word ‘Analyst’ or the word ‘Analytics’? What word do these positions have in common?
 
 SELECT DISTINCT title
 FROM data_analyst_jobs
-WHERE title NOT LIKE '%Analyst%' AND title NOT LIKE '%Analytics%';
+WHERE LOWER(title) NOT LIKE LOWER('%Analyst%') AND LOWER(title) NOT LIKE LOWER('%Analytics%');
 
---26 job titles do not contain 'Analyst' or 'Analytics'
+--4 job titles do not contain 'Analyst' or 'Analytics'. The most common word seems to be the word 'Tableau'
 
 -- **BONUS:**
 -- You want to understand which jobs requiring SQL are hard to fill. Find the number of jobs by industry (domain) that require SQL and have been posted longer than 3 weeks. 
 --  - Disregard any postings where the domain is NULL. 
 --  - Order your results so that the domain with the greatest number of `hard to fill` jobs is at the top. 
---   - Which three industries are in the top 4 on this list? How many jobs have been listed for more than 3 weeks for each of the top 4?
+--   - What are the top 4 industries in the top 4 on this list? How many jobs have been listed for more than 3 weeks for each of the top 4?
+
+SELECT COUNT(title) AS jobs, domain
+FROM data_analyst_jobs
+WHERE domain IS NOT NULL AND days_since_posting > 21 AND skill LIKE UPPER('%SQL%')
+GROUP BY domain
+ORDER BY jobs DESC
+LIMIT 4;
+
+--Internet and Software had 62 jobs, Bank and Financial Services had 61, Consulting and Business Services had 57, and Health Care had 52
 
