@@ -19,6 +19,7 @@ SELECT COUNT(*)
 FROM data_analyst_jobs
 WHERE location = 'TN';
 --21 Jobs in Tennessee
+
 SELECT COUNT(*)
 FROM data_analyst_jobs
 WHERE location = 'TN' OR location = 'KY';
@@ -65,7 +66,7 @@ WHERE location = 'CA';
 
 -- 9.	Find the name of each company and its average star rating for all companies that have more than 5000 reviews across all locations. How many companies are there with more that 5000 reviews across all locations?
 
-SELECT company, ROUND(AVG(review_count),2) AS rating
+SELECT company, ROUND(AVG(review_count),2) AS rating,
 FROM data_analyst_jobs
 WHERE review_count > 5000 AND company IS NOT NULL
 GROUP BY company;
@@ -100,7 +101,7 @@ WHERE LOWER(title) LIKE LOWER('%Analyst%');
 
 SELECT DISTINCT title
 FROM data_analyst_jobs
-WHERE LOWER(title) NOT LIKE LOWER('%Analyst%') AND LOWER(title) NOT LIKE LOWER('%Analytics%');
+WHERE title NOT ILIKE '%analyst%' AND title NOT ILIKE '%analytics%';
 
 --4 job titles do not contain 'Analyst' or 'Analytics'. The most common word seems to be the word 'Tableau'
 
@@ -112,7 +113,7 @@ WHERE LOWER(title) NOT LIKE LOWER('%Analyst%') AND LOWER(title) NOT LIKE LOWER('
 
 SELECT COUNT(title) AS jobs, domain
 FROM data_analyst_jobs
-WHERE domain IS NOT NULL AND days_since_posting > 21 AND skill LIKE UPPER('%SQL%')
+WHERE domain IS NOT NULL AND days_since_posting > 21 AND skill ILIKE '%SQL%'
 GROUP BY domain
 ORDER BY jobs DESC
 LIMIT 4;
