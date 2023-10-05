@@ -75,7 +75,7 @@ GROUP BY company;
 
 -- 10.	Add the code to order the query in #9 from highest to lowest average star rating. Which company with more than 5000 reviews across all locations in the dataset has the highest star rating? What is that rating?
 
-SELECT company, ROUND(AVG(review_count),2) AS review, AVG(star_rating) AS stars
+SELECT company, ROUND(AVG(review_count),2) AS review, AVG(star_rating) AS stars,
 FROM data_analyst_jobs
 WHERE review_count > 5000 AND company IS NOT NULL
 GROUP BY company, location
@@ -87,13 +87,13 @@ ORDER BY stars DESC;
 
 SELECT COUNT(title)
 FROM data_analyst_jobs
-WHERE LOWER(title) LIKE LOWER('%Analyst%');
+WHERE title ILIKE '%Analyst%';
 
 --1669 total jobs
 
 SELECT COUNT(DISTINCT title)
 FROM data_analyst_jobs
-WHERE LOWER(title) LIKE LOWER('%Analyst%');
+WHERE title ILIKE '%Analyst%';
 
 --There are 774 different job titles that contain "Analyst".
 
