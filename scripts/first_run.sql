@@ -119,4 +119,3 @@ ORDER BY jobs DESC
 LIMIT 4;
 
 --Internet and Software had 62 jobs, Bank and Financial Services had 61, Consulting and Business Services had 57, and Health Care had 52
-
